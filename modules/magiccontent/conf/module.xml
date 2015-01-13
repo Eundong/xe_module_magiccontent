@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<grants />
+	<permissions />
+	<actions>
+		<action name="dispMagiccontentSetup" type="view" standalone="true" />
+		<action name="dispMagiccontentInsertDocument" type="view" standalone="true" />
+		<action name="dispMagiccontentSearchDocument" type="view" standalone="true" />	
+		<action name="dispMagiccontentGetNewSequence" type="view" standalone="true" />
+
+		<action name="procMagiccontentSetup" type="controller" />
+		<action name="procMagiccontentInsertDocument" type="controller" />
+		<action name="procMagiccontentResetTempSetup" type="controller" />
+	</actions>
+</module>

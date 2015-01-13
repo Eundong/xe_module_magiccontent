@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="0.2">
+	<title xml:lang="ko">매직 컨텐츠 모듈</title>
+	<description xml:lang="ko">컨텐츠를 자유롭게 지정할수 있는 위젯과 통신하기 위한 모듈입니다.</description>
+	<version>0.1.0-beta1</version>
+	<date>2015-01-11</date>
+	<category>utility</category>
+	<author email_address="dh1024@gmail.com" link="http://www.eundong.net/">
+		<name xml:lang="ko">Eundong</name>
+	</author>
+</module>

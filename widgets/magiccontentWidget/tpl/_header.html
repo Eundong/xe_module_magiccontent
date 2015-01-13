@@ -1,0 +1,10 @@
+<load target="./tpl.js" />
+<load target="./tpl.css" />
+
+<div class='magicContentContainer'>
+	<div class="alertWidgetSequence" cond="!$widget_sequence">
+		위젯 고유번호가 부여되어있지 않습니다. 외부페이지면 수동으로, 위젯페이지면 고유번호 부여 버튼을 눌러주세요.
+	</div>
+	<div class="widgetDataButton" onclick='showMagicContentWidgetSetup(this)' data-widget-sequence="{$widget_sequence}">
+		컨텐츠 조정<span class='widgetArgs'>{base64_encode(serialize($args))}</span>
+	</div>

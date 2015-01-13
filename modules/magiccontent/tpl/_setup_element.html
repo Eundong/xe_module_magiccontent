@@ -1,0 +1,55 @@
+{@
+	$id = $tab.'|'.$p.'|'.$i;
+	$index = $p * $widget_structure->list_count + $i;
+	$item = ($tab != 0 ? $magiccontent_content_items[$tab][$index] : $magiccontent_content_items[$index]);
+}
+<!--@if(!$item)-->
+	{@
+		$item = new $widget_structure->widgetContentItem();
+		$item->is_empty = true;
+	}
+<!--@end-->
+<div class="x_control-group" cond="$item">
+	<label for="selected_widget" class="x_control-label">
+		<span cond="$item->is_empty" class="x_label x_label-success">빈 항목</span> {$i+1} 번째 줄
+		<label class='data_use_check' style='float:right;'>
+			<input name='use_custom|{$id}' value='1' type='checkbox' checked="checked"|cond="$setup_data['use_custom|'.$id] == 1">
+			<span>출력 내용 수동 지정</span>
+		</label>
+	</label>
+	{@
+		$document = $oDocumentModel->getDocument($item->get('document_srl'));
+		$module_info = $oModuleModel->getModuleInfoByModuleSrl($document->get('module_srl'));
+	}
+	<div class="x_controls operated_content" style="display:block"|cond="$setup_data['use_custom|'.$id] == 1">
+		<span cond="!$setup_data['document_srl|'.$id]" class="x_label x_label-success">자동</span>
+		<span cond="$setup_data['document_srl|'.$id] && $module_info->module_srl" class="x_label x_label-important">수동</span>
+		<span cond="$setup_data['document_srl|'.$id] && !$module_info->module_srl" class="x_label x_label-info">더미</span>
+		<input type='text' placeholder="{$item->getTitle()}" disabled=disabled >
+		<input type='hidden' name="document_srl|{$id}" class='document_srl' value="{$setup_data['document_srl|'.$id]}">
+		<button type='button' class='x_btn x_btn-mini x_btn-info' onclick='magiccontent.searchDocument(this)' >문서 찾기</button>
+		<button type='button' cond="$setup_data['document_srl|'.$id] && !$module_info->module_srl" class='x_btn x_btn-mini x_btn-primary' onclick="magiccontent.insertDocument(this, {$item->get('document_srl')})" >수정</button>
+		<button type='button' class='x_btn x_btn-mini x_btn-success' onclick='magiccontent.insertDocument(this)' >새 더미 문서</button>
+		<label class='data_custom_check' style='float:right;'><input name='use_document_edit|{$id}' value='1' type='checkbox' checked="checked"|cond="$setup_data['use_document_edit|'.$id]"> 문서 내용 일부 교체</label>
+		<div class='x_well custom_document' style="display:block"|cond="$setup_data['use_document_edit|'.$id]">
+			<strong>제목</strong> <input type='text' name='custom_title|{$id}' placeholder='{$item->getTitle()}' value="{$setup_data['custom_title|'.$id]}"> &nbsp;
+			<strong>작성시간</strong> <input type='text' placeholder='{$item->getRegdate()}'>
+			<br />
+			<textarea name='custom_summary|{$id}' placeholder="{$item->getContent()}">{$setup_data['custom_summary|'.$id]}</textarea><br />
+			<div class='thumbnail_selectlist'>
+				<div class='header'>썸네일 선택</div>
+				<block loop="$document->getUploadedFiles() => $key, $val">
+					<label>
+						<input type='radio' name="thumbnail_select|{$id}" value="{$val->uploaded_filename}"|cond="$key != 0" value="0"|cond="$key == 0" checked="checked"|cond="($key == 0 && !$setup_data['thumbnail_select|'.$id]) || ($key != 0 && $setup_data['thumbnail_select|'.$id] == $val->uploaded_filename)" />
+						<img src="{$val->uploaded_filename}" alt="{$val->source_filename}" />
+					</label>
+				</block>
+			</div>
+			<label><input type="radio" name="thumbnail_select|{$id}" value="custom_url" checked="checked"|cond="$setup_data['thumbnail_select|'.$id] == 'custom_url'"> 외부 이미지 URL <input type="text" name="thumbnail_url|{$id}" placeholder="썸네일을 생성할 이미지 파일의 URL" value="{$setup_data['thumbnail_url|'.$id]}"></label>
+		</div>
+		<div class='link_url'>
+			클릭시 연결될 URL <input type='text' name="custom_link|{$id}" placeholder="문서로 연결" value="{$setup_data['custom_link|'.$id]}">
+			<div cond="$setup_data['document_srl|'.$id] && !$module_info->module_srl && !$setup_data['custom_link|'.$id]" class="x_alert x_alert-info"><b>안내!</b> 더미 문서의 경우는 클릭시 연결될 URL 을 반드시 지정해주셔야 합니다.</div>
+		</div>
+	</div>
+</div>

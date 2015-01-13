@@ -1,0 +1,6 @@
+<table name="magiccontent">
+	<column name="data_srl" type="number" size="11" notnull="notnull" primary_key="primary_key" />
+	<column name="widget_sequence" type="number" size="11" notnull="notnull" idx="idx_widget_sequence" />
+	<column name="data" type="text" />
+	<column name="is_complete" type="number" size="1" default="0" notnull="notnull" idx="idx_is_complete" />
+</table>

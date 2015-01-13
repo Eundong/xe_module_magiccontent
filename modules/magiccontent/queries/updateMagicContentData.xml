@@ -1,0 +1,12 @@
+<query id="updateMagicContentData" action="update">
+	<tables>
+		<table name="magiccontent" />
+	</tables>
+	<columns>
+		<column name="data" var="data" />
+	</columns>
+	<conditions>
+        <condition operation="equal" column="widget_sequence" var="widget_sequence" filter="number" notnull="notnull" />
+		<condition operation="equal" column="is_complete" var="is_complete" filter="number" notnull="notnull" pipe="and" />
+    </conditions>
+</query>

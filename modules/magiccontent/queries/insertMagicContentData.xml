@@ -1,0 +1,11 @@
+<query id="insertMagicContentData" action="insert">
+	<tables>
+		<table name="magiccontent" />
+	</tables>
+	<columns>
+		<column name="data_srl" var="data_srl" />
+		<column name="widget_sequence" var="widget_sequence" />
+		<column name="data" var="data" />
+		<column name="is_complete" var="is_complete" />
+	</columns>
+</query>

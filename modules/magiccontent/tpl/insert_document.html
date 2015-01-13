@@ -1,0 +1,19 @@
+<include target="./_header.html" />
+
+<div class="x">
+	<div class="x_modal-header">
+		<h1 cond="!$oDocument->isExists()">더미 문서 생성</h1>
+		<h1 cond="$oDocument->isExists()">더미 문서 수정</h1>
+	</div>
+	<div id="content" class="x_modal-body">
+		<form onsubmit="return procFilter(this, window.insert)"> 
+			<input type="hidden" name="mid" value="" />
+			<input type="hidden" name="content" value="{$oDocument->get('content')}" />
+			<input type="hidden" name="document_srl" value="" />
+			<input type="hidden" name="widget_sequence" value="{$widget_sequence}" />
+			제목 : <input type="text" name="title" value="{$oDocument->get('title')}">
+			{$oDocument->getEditor()}
+			<input type="submit">
+		</form>
+	</div>
+</div>

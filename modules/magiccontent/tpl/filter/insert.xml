@@ -1,0 +1,14 @@
+<filter name="insert" module="board" act="procMagiccontentInsertDocument">
+  <form>
+    <node target="title" required="true" minlength="1" maxlength="250" />
+    <node target="content" required="true" />
+  </form>
+  <response callback_func="completeDocumentInserted">
+    <tag name="error" />
+    <tag name="message" />
+    <tag name="mid" />
+    <tag name="document_srl" />
+	<tag name="title" />
+    <tag name="category_srl" />
+  </response>
+</filter>

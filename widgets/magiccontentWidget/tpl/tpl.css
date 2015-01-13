@@ -1,0 +1,9 @@
+.magicContentContainer { position:relative; }
+.magicContentContainer .widgetDataButton { display:none; position:absolute; right:10px; top:10px; z-index:12345; padding:10px; color: #3a87ad;
+background-color: #d9edf7;
+border-color: #bce8f1; border-radius:4px; padding: 8px 14px 8px 14px; cursor:pointer; }
+.magicContentContainer .widgetDataButton .widgetArgs { display:none; }
+
+.magicContentContainer .alertWidgetSequence { position:absolute; left:10px; top:10px; z-index:1; padding:10px; color: #b94a48;
+background-color: #f2dede;
+border-color: #eed3d7; border-radius:4px; padding: 8px 14px 8px 14px; cursor:pointer; }
