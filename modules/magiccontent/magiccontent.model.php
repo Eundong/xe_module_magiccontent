@@ -59,9 +59,8 @@ class magiccontentModel extends magiccontent {
 		{
 			list($_w, $_h, $_t, $_a) = @getimagesize($tmp_file);
 			if(!in_array($_t, array(1, 2, 3, 6, 7, 8))) {
-				/* 이미지파일이 아니니 썸네일 파일에 공백을 입력하고, 종료 */
 				FileHandler::writeFile($thumbnail_file, '','w');
-				return;
+				return false;
 			}
 
 			$source_file = $tmp_file;
