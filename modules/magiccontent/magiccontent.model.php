@@ -49,7 +49,7 @@ class magiccontentModel extends magiccontent {
 			else return $thumbnail_url;
 		}
 
-		$tmp_file = sprintf('./files/cache/tmp/%d', md5(rand(111111,999999).$image_url));
+		$tmp_file = sprintf('./files/cache/tmp/%s', md5(rand(111111,999999).$image_url));
 		if(!is_dir('./files/cache/tmp')) FileHandler::makeDir('./files/cache/tmp');
 		if(!preg_match('/^(http|https):\/\//i',$image_url)) $image_url = Context::getRequestUri().$image_url;
 
@@ -58,7 +58,11 @@ class magiccontentModel extends magiccontent {
 		else
 		{
 			list($_w, $_h, $_t, $_a) = @getimagesize($tmp_file);
-			if($_w<$width || $_h<$height) return false;
+			if(!in_array($_t, array(1, 2, 3, 6, 7, 8))) {
+				/* 이미지파일이 아니니 썸네일 파일에 공백을 입력하고, 종료 */
+				FileHandler::writeFile($thumbnail_file, '','w');
+				return;
+			}
 
 			$source_file = $tmp_file;
 		}
