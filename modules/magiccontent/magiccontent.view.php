@@ -36,6 +36,7 @@ class magiccontentView extends magiccontent {
 		$widget_structure->widgetContentItem = $widget_args->widgetContentItem;
 
 		$oWidgetController = &getController('widget');
+		$widget_args->widget_cache = 0;
 		$output = $oWidgetController->execute($widget_args->widget, $widget_args, false, false);
 
 		Context::set('widget_structure', $widget_structure);
