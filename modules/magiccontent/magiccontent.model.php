@@ -58,14 +58,10 @@ class magiccontentModel extends magiccontent {
 		else
 		{
 			list($_w, $_h, $_t, $_a) = @getimagesize($tmp_file);
-<<<<<<< HEAD
-			if($_w<$width || $_h<$height) return false;
-=======
 			if(!in_array($_t, array(1, 2, 3, 6, 7, 8))) {
 				FileHandler::writeFile($thumbnail_file, '','w');
 				return false;
 			}
->>>>>>> origin/develop
 
 			$source_file = $tmp_file;
 		}
