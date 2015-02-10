@@ -104,7 +104,7 @@ magicContent.prototype.searchDocument = function(target) {
 	$form.find('input.document_srl').removeClass('target');
 	$target.parent().find('.document_srl').addClass('target');
 
-	var url = $form.attr('data-search-document-url') + '&widget_sequence=' + $form.find('input[name=widget_sequence]').val();
+	var url = window.request_uri.setQuery('act', 'dispMagiccontentSearchDocument').setQuery('widget_sequence', $form.find('input[name=widget_sequence]').val());
 	popopen(url, 'select_document');
 }
 

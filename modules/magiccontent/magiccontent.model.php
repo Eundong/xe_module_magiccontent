@@ -6,6 +6,10 @@
  * @brief model class of the magic content module
  */
 class magiccontentModel extends magiccontent {
+	function setTemporaryWidgetData($args) {
+		$_SESSION['XE_MAGICCONTENT_WIDGET_ARGS'][$args->widget_sequence] = $args;
+	}
+
 	function getSetupData($widget_sequence, $is_complete = 1)
 	{
 		$args = new stdClass();
@@ -49,7 +53,7 @@ class magiccontentModel extends magiccontent {
 			else return $thumbnail_url;
 		}
 
-		$tmp_file = sprintf('./files/cache/tmp/%d', md5(rand(111111,999999).$image_url));
+		$tmp_file = sprintf('./files/cache/tmp/%s', md5(rand(111111,999999).$image_url));
 		if(!is_dir('./files/cache/tmp')) FileHandler::makeDir('./files/cache/tmp');
 		if(!preg_match('/^(http|https):\/\//i',$image_url)) $image_url = Context::getRequestUri().$image_url;
 

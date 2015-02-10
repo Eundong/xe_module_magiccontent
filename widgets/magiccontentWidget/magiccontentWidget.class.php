@@ -6,7 +6,6 @@
 			  원작: Content 위젯(NHN, developers@xpressengine.com)
      * @version 1.00
      **/
-
 class magiccontentWidget extends WidgetHandler
 {
 	/**
@@ -142,67 +141,71 @@ class magiccontentWidget extends WidgetHandler
 		
 		if($args->widget_sequence) {
 			if(!isset($args->is_complete)) $args->is_complete = 1;
+			$oMagiccontentModel->setTemporaryWidgetData($args);
 			$setup_data = $oMagiccontentModel->getSetupData($args->widget_sequence, $args->is_complete);
 			if($args->is_complete === 0 && $setup_data === false) $setup_data = $oMagiccontentModel->getSetupData($args->widget_sequence, 1);
 		}
 
-		foreach($setup_data as $key => $val) {
-			$keys = explode('|', $key);
-			if(count($keys) != 4 || $keys[0] != 'use_custom' || $val != 1) continue;
-			$id = $keys[1].'|'.$keys[2].'|'.$keys[3];
-			
-			$index = $keys[2] * $args->list_count + $keys[3];
-			if($args->tab_type == 'none' || $args->tab_type == '') {
-				$ci = &$content_items[$index];
-			} else {
-				$ci = &$content_items[$keys[1]][$index];
-			}
-
-
-			if($setup_data->{'document_srl|'.$id}) {
-				$target_srl = $setup_data->{'document_srl|'.$id};
-				$oDocument = $oDocumentModel->getDocument($target_srl);
-				$document_srl = $oDocument->document_srl;
-				$module_srl = $oDocument->get('module_srl');
-				$category_srl = $oDocument->get('category_srl');
-				$thumbnail = $oDocument->getThumbnail($args->thumbnail_width,$args->thumbnail_height,$args->thumbnail_type);
-				$c_item = new magiccontentItem($args->module_srls_info[$module_srl]->browser_title );
-				$c_item->adds($oDocument->getObjectVars());
-				$c_item->add('original_content', $oDocument->get('content'));
-				$c_item->setTitle(htmlspecialchars($oDocument->getTitleText()));
-				$c_item->setCategory( $category_lists[$module_srl][$category_srl]->title );
-				$c_item->setDomain( $args->module_srls_info[$module_srl]->domain );
-				$c_item->setContent($oDocument->getSummary($args->content_cut_size));
-				$c_item->setLink( getSiteUrl($domain,'','document_srl',$document_srl) );
-				$c_item->setThumbnail($thumbnail);
-				$c_item->setExtraImages($oDocument->printExtraImages($args->duration_new * 60 * 60));
-				$c_item->add('mid', $args->mid_lists[$module_srl]);
-				if($first_thumbnail_idx==-1 && $thumbnail) $first_thumbnail_idx = $i;
-
-				$ci = $c_item;
-			}		
-
-			if($setup_data->{'custom_link|'.$id}) {
-				$ci->setLink($setup_data->{'custom_link|'.$id});
-			}
-
-			if($setup_data->{'use_document_edit|'.$id}) {
-				if($title = $setup_data->{'custom_title|'.$id}) {
-					$ci->setTitle($title);
-				}
-
-				if($summary = $setup_data->{'custom_summary|'.$id}) {
-					$ci->setContent($summary);
-				}
-			}
-
-			if($setup_data->{'thumbnail_select|'.$id}) {
-				if($ts = $setup_data->{'thumbnail_select|'.$id} == 'custom_url' && $curl = $setup_data->{'thumbnail_url|'.$id}) {
-					$thumbnail = $oMagiccontentModel->getThumbnailByUrl($setup_data->{'thumbnail_url|'.$id}, $args->thumbnail_width,$args->thumbnail_height,$args->thumbnail_type);
+		if($setup_data !== false) {
+			foreach($setup_data as $key => $val) {
+				$keys = explode('|', $key);
+				if(count($keys) != 4 || $keys[0] != 'use_custom' || $val != 1) continue;
+				$id = $keys[1].'|'.$keys[2].'|'.$keys[3];
+				
+				$index = $keys[2] * $args->list_count + $keys[3];
+				if($args->tab_type == 'none' || $args->tab_type == '') {
+					$ci = &$content_items[$index];
 				} else {
-					$thumbnail = $oMagiccontentModel->getThumbnailByUrl($setup_data->{'thumbnail_select|'.$id}, $args->thumbnail_width,$args->thumbnail_height,$args->thumbnail_type);
+					$ci = &$content_items[$keys[1]][$index];
 				}
-				if($thumbnail) $ci->setThumbnail($thumbnail);
+
+
+				if($setup_data->{'document_srl|'.$id}) {
+					$target_srl = $setup_data->{'document_srl|'.$id};
+					$oDocument = $oDocumentModel->getDocument($target_srl);
+					$document_srl = $oDocument->document_srl;
+					$module_srl = $oDocument->get('module_srl');
+					$category_srl = $oDocument->get('category_srl');
+					$thumbnail = $oDocument->getThumbnail($args->thumbnail_width,$args->thumbnail_height,$args->thumbnail_type);
+					$c_item = new magiccontentItem($args->module_srls_info[$module_srl]->browser_title );
+					$c_item->adds($oDocument->getObjectVars());
+					$c_item->add('original_content', $oDocument->get('content'));
+					$c_item->setTitle(htmlspecialchars($oDocument->getTitleText()));
+					$c_item->setCategory( $category_lists[$module_srl][$category_srl]->title );
+					$c_item->setDomain( $args->module_srls_info[$module_srl]->domain );
+					$c_item->setContent($oDocument->getSummary($args->content_cut_size));
+					$c_item->setLink( getSiteUrl($domain,'','document_srl',$document_srl) );
+					$c_item->setThumbnail($thumbnail);
+					$c_item->setExtraImages($oDocument->printExtraImages($args->duration_new * 60 * 60));
+					$c_item->add('mid', $args->mid_lists[$module_srl]);
+					if($first_thumbnail_idx==-1 && $thumbnail) $first_thumbnail_idx = $i;
+
+					$ci = $c_item;
+				}		
+
+				if($setup_data->{'custom_link|'.$id}) {
+					$ci->setLink($setup_data->{'custom_link|'.$id});
+				}
+
+				if($setup_data->{'use_document_edit|'.$id}) {
+					if($title = $setup_data->{'custom_title|'.$id}) {
+						$ci->setTitle($title);
+					}
+
+					if($summary = $setup_data->{'custom_summary|'.$id}) {
+						$ci->setContent($summary);
+					}
+				}
+
+				if($setup_data->{'thumbnail_select|'.$id}) {
+					if($ts = $setup_data->{'thumbnail_select|'.$id} == 'custom_url' && $curl = $setup_data->{'thumbnail_url|'.$id}) {
+						$thumbnail = $oMagiccontentModel->getThumbnailByUrl($setup_data->{'thumbnail_url|'.$id}, $args->thumbnail_width,$args->thumbnail_height,$args->thumbnail_type);
+					} else {
+						$thumbnail = $oMagiccontentModel->getThumbnailByUrl($setup_data->{'thumbnail_select|'.$id}, $args->thumbnail_width,$args->thumbnail_height,$args->thumbnail_type);
+					}
+
+					if($thumbnail) $ci->setThumbnail($thumbnail);
+				}
 			}
 		}
 

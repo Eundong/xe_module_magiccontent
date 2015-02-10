@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <widget version="0.2">
-    <title xml:lang="ko">Content 위젯 (MagicContent 지원)</title>
+    <title xml:lang="ko">Magic Content 위젯</title>
     <description xml:lang="ko">문서 컨텐츠를 좀더 자유롭게 관리자가 조정할수 있는 위젯입니다. 해당 위젯은 Magic Content 모듈이 함께 필요합니다.</description>
-    <version>1.0</version>
-    <date>2015-01-11</date>
+    <version>1.1</version>
+    <date>2015-02-10</date>
     <author email_address="dh1024@gmail.com" link="http://eundong.net/">
         <name xml:lang="ko">Eundong</name>
     </author>
     <extra_vars>
         <group>
-            <var id="module_srls"> 
+            <var id="module_srls">
                 <type>module_srl_list</type>
                 <name xml:lang="ko">대상 페이지</name>
                 <name xml:lang="zh-CN">对象模块</name>

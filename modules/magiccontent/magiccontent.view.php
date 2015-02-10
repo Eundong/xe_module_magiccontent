@@ -14,9 +14,8 @@ class magiccontentView extends magiccontent {
 
 	function dispMagiccontentSetup()
 	{
-		$widget_args = unserialize(base64_decode(Context::get('widget_args')));
+		$widget_args = $_SESSION['XE_MAGICCONTENT_WIDGET_ARGS'][Context::get('widget_sequence')];
 		$widget_args->is_complete = 0;
-		Context::set('widget_sequence', $widget_args->widget_sequence);
 		Context::set('admin_bar','false');
 
 		$logged_info = Context::get('logged_info');
@@ -29,6 +28,11 @@ class magiccontentView extends magiccontent {
 
 		if($widget_structure->tab == true) {
 			$widget_structure->tabs = $widget_args->module_srls_info;
+		} else {
+			$tab = new stdClass();
+			$tab->module_srl = 0;
+			$tab->browser_title = '단일';
+			$widget_structure->tabs = array($tab);
 		}
 
 		$widget_structure->list_count = $widget_args->list_count;

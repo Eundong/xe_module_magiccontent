@@ -1,8 +1,7 @@
 function showMagicContentWidgetSetup(target) {
 	var $target = jQuery(target);
-	var widgetArgs = $target.find('.widgetArgs').html();
-	var url = window.request_uri.setQuery('act', 'dispMagiccontentSetup').setQuery('widget_args' ,widgetArgs);
 	var widget_sequence = $target.attr('data-widget-sequence');
+	var url = window.request_uri.setQuery('act', 'dispMagiccontentSetup').setQuery('widget_sequence' ,widget_sequence);
 	if(!widget_sequence) {
 		alert('위젯 번호가 부여되지 않은 위젯은 데이터를 조정할수 없습니다.\n외부페이지라면 수동으로, 위젯페이지라면 편집화면에서 위젯번호 부여 버튼을 클릭해주세요.');
 		return;
