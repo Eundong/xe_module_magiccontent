@@ -1,5 +1,5 @@
 <include target="./_header.html" />
-<a nohref name="head"/></a>
+
 <script>
 	jQuery(function($) {
 		$(window).scrollTop({$scrollTop});
@@ -16,25 +16,13 @@
 				{$widget_result}
 			</div>
 		</section>
-		<form class="x_form-horizontal" id='setupForm' data-search-document-url="{getUrl('', 'act', 'dispMagiccontentSearchDocument')}" data-insert-document-url="{getUrl('', 'act', 'dispMagiccontentSearchDocument')}">
+		<form class="x_form-horizontal" id='setupForm'>
 			<input type="hidden" name="act" value="procMagiccontentSetup" />
 			<input type="hidden" name="error_return_url" value="" />
 			<input type="hidden" name="widget_sequence" value="{$widget_sequence}" />
 			<section class="section" loop="$widget_structure->tabs => $key, $val">
 				{@ $tab = $val->module_srl; }
 				<h1>{$val->browser_title} 탭 데이터<button type="button" class="snToggle x_icon-chevron-up">Toggle this section</button></h1>
-				<!--@for($p=0;$p<$widget_structure->page_count;$p++)-->
-					<div class='page_haeder'>
-						{$p+1} 페이지 데이터
-					</div>
-					<!--@for($i=0;$i<$widget_structure->list_count;$i++)-->
-					<include target="./_setup_element.html" />
-					<!--@end-->
-				<!--@end-->
-			</section>
-			<section class="section" cond="$widget_structure->tab == false">
-				{@ $tab = 0; }
-				<h1>단일 탭 데이터<button type="button" class="snToggle x_icon-chevron-up">Toggle this section</button></h1>
 				<!--@for($p=0;$p<$widget_structure->page_count;$p++)-->
 					<div class='page_haeder'>
 						{$p+1} 페이지 데이터
